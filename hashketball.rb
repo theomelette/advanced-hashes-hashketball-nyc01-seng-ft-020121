@@ -194,11 +194,17 @@ def player_stats(name)
 end
 
 def big_shoe_rebounds
-  game_hash.each do |key, value|
-    value.each do |teammates, stats|
-      if stats[:shoe] < 18
-      return teammates[:rebounds]
+  player_name = nil
+  player_shoe = 0
+  player_rebounds = 0
+  game_hash.each do |team, team_data|
+    team_data[:players].each do |player, stats|
+      if stats[:shoe] > player_shoe
+        player_shoe = stats[:shoe]
+        player_name = player
+        player_rebounds = stats[:rebounds]
       end
     end
   end
+  player_rebounds
 end
